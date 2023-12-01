@@ -11,5 +11,6 @@ urlpatterns = [
     path('unassigned-tickets/', unassigned_tickets, name='unassigned-tickets'), 
     path('assign-ticket/<str:ticket_id>/', assign_ticket, name='assign-ticket'), 
     path('resolve-ticket/<str:ticket_id>/', resolve_ticket, name='resolve-ticket'), 
-    path('ticket-details/<str:ticket_id>/', ticket_details, name='ticket-details')
+    path('ticket-details/<str:ticket_id>/', ticket_details, name='ticket-details'), 
+    path('all-active-tickets/', all_active_tickets, name='all-active-tickets')
 ]

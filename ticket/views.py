@@ -126,3 +126,10 @@ def ticket_details(request, ticket_id):
     ticket = Ticket.objects.get(ticket_id=ticket_id)
     context = {'ticket':ticket}
     return render(request, 'ticket/ticket_details.html', context)
+
+# for superuser only 
+@login_required
+def all_active_tickets(request):
+    tickets = Ticket.objects.filter(is_resolved=False, is_assigned=True)
+    context = {'tickets':tickets}
+    return render(request, 'ticket/all_active_tickets.html', context)
