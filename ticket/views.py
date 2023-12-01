@@ -11,6 +11,7 @@ from .models import *
 
 User = get_user_model()
 
+@login_required
 def create_ticket(request):
     if request.method == 'POST':
         form = CreateTicketForm(request.POST)
@@ -36,6 +37,7 @@ def create_ticket(request):
         context = {'form':form}
     return render(request, 'ticket/create_ticket.html', context)
 
+@login_required
 def update_ticket(request, ticket_id):
     ticket = Ticket.objects.get(ticket_id=ticket_id)
     if request.method == 'POST':
@@ -52,31 +54,37 @@ def update_ticket(request, ticket_id):
         context = {'form':form, 'ticket':ticket}
     return render(request, 'ticket/update_ticket.html', context)
 
+@login_required
 def customer_active_tickets(request):
     tickets = Ticket.objects.filter(customer=request.user, is_resolved=False)
     context = {'tickets':tickets}
     return render(request, 'ticket/customer_active_tickets.html', context)
 
+@login_required
 def customer_closed_tickets(request):
     tickets = Ticket.objects.filter(customer=request.user, is_resolved=True)
     context = {'tickets':tickets}
     return render(request, 'ticket/customer_closed_tickets.html', context)
 
+@login_required
 def engineer_active_tickets(request):
     tickets = Ticket.objects.filter(engineer=request.user, is_resolved=False)
     context = {'tickets':tickets}
     return render(request, 'ticket/engineer_active_tickets.html', context)
 
+@login_required
 def engineer_closed_tickets(request):
     tickets = Ticket.objects.filter(engineer=request.user, is_resolved=True)
     context = {'tickets':tickets}
     return render(request, 'ticket/engineer_closed_tickets.html', context)
 
+@login_required
 def unassigned_tickets(request):
     tickets = Ticket.objects.filter(is_assigned=False)
     context = {'tickets':tickets}
     return render(request, 'ticket/unassigned_tickets.html', context)
 
+@login_required
 def assign_ticket(request, ticket_id):
     ticket = Ticket.objects.get(ticket_id=ticket_id)
     if request.method == 'POST':
@@ -98,6 +106,7 @@ def assign_ticket(request, ticket_id):
         context = {'form':form}
     return render(request, 'ticket/assign_ticket.html', context)
 
+@login_required
 def resolve_ticket(request, ticket_id):
     ticket = Ticket.objects.get(ticket_id=ticket_id)
     if request.method == 'POST':
@@ -111,7 +120,8 @@ def resolve_ticket(request, ticket_id):
     else:
         messages.warning(request, 'Something went wrong. Please, try this action again')
         return redirect('dashboard')
-    
+
+@login_required    
 def ticket_details(request, ticket_id):
     ticket = Ticket.objects.get(ticket_id=ticket_id)
     context = {'ticket':ticket}
