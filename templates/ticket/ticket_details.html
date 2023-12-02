@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        {% if ticket.status == 'Pending' %}
+        <p class="col-md-8 fs-4"><span class="badge bg-warning">Pending</span></p>
+        {% elif ticket.status == 'Active' %}
+        <p class="col-md-8 fs-4"><span class="badge bg-success">Active</span></p>
+        {% elif ticket.status == 'Closed' %}
+        <p class="col-md-8 fs-4"><span class="badge bg-danger">Closed</span></p>
+        {% endif %}
+        <h1 class="display-5 fw-bold">{{ticket.title}} #{{ticket.ticket_id}}</h1>
+        <p class="col-md-8 fs-4">{{ticket.description}}</p>
+
+
+        {% if request.user.is_engineer and not ticket.is_resolved %}
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Resolve Issue
+        </button>
+        {% endif %}
+    </div>
+</div>
+
+{% if ticket.resolution_steps %}
+<div class="p-5 bg-light rounded-3">
+    <div class="container-fluid">
+        <p class="col-md-8 fs-4"><span class="badge bg-secondary">Resolution Steps</span></p>
+        <p class="col-md-8 fs-4">{{ticket.resolution_steps}}</p>
+    </div>
+</div>
+{% endif %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Ticket Resolution</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="p-4 p-md-5 border rounded-3 bg-light" method="POST"
+                    action="{% url 'resolve-ticket' ticket.ticket_id %}">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input type="input" class="form-control" value="{{ticket.title}} #{{ticket.ticket_id}}"
+                            id="floatingInput" disabled>
+                        <label for="floatingInput">Ticket Title</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="rs" id="exampleFormControlTextarea1" rows="3"
+                            required></textarea>
+                        <label for="floatingPassword">Resolution Steps</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
