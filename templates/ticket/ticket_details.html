@@ -12,7 +12,9 @@
         <p class="col-md-8 fs-4"><span class="badge bg-danger">Closed</span></p>
         {% endif %}
         <h1 class="display-5 fw-bold">{{ticket.title}} #{{ticket.ticket_id}}</h1>
-        <p class="col-md-8 fs-4">{{ticket.description}}</p>
+        <p class="col-md-8 fs-4">{{ticket.description}} {% if not ticket.is_resolved %}<small><a
+                    href="{% url 'update-ticket' ticket.ticket_id %}">Update Ticket</a></small>{% endif %}
+        </p>
 
 
         {% if request.user.is_engineer and not ticket.is_resolved %}
