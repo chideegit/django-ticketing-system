@@ -1,4 +1,4 @@
-# Basic Django Authentication
+# Django Ticketing System
 
 Now your customers can get help in real time by opening support tickets and collaborating with support agents.  
 

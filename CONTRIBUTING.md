@@ -1,4 +1,4 @@
-# Contributing to Basic Django Authentication Project
+# Contributing to the Django Ticketing System Project
 
 Thank you for considering contributing to this awesome project! We appreciate your time and effort to make our project better.
 
@@ -47,4 +47,4 @@ Please adhere to the PEP 8 [style guideline](https://peps.python.org/pep-0008/).
 ## License
 By contributing to the Basic Django Authentication project, you agree that your contributions will be licensed under the [Project License](./LICENSE).
 
-Thank you again for your interest in contributing to the Basic Django Authentication Project! We look forward to your valuable contributions.
+Thank you again for your interest in contributing to the Django Ticketing Sytem Project! We look forward to your valuable contributions.
